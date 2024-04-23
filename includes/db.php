@@ -5,7 +5,7 @@
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "bupad";
+    $dbname = "timetable-system";
 
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
