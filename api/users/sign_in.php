@@ -1,4 +1,7 @@
 <?php
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 // * API FOR SIGN IN
 
 include_once '../../includes/db.php';
@@ -20,7 +23,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
     $query = "SELECT * FROM users WHERE email = ?";
      $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $id_num);
+    $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -64,8 +67,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     $response->type = "admin";
                     $response->email = $row['email'];
                     $response->token = $token ?? ''; // Include the token in the response
+                    $response->user_id = $_SESSION['user_id'];
                     http_response_code(200);
                     echo json_encode($response);
+                    exit();
                 }else if($row['type' === 'instructor']){
                     $response->message = "Successfully logged in";
                     $response->type = "instructor";
@@ -73,6 +78,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     $response->token = $token ?? ''; // Include the token in the response
                     http_response_code(200);
                     echo json_encode($response);
+                    exit();
                 } else { 
                     // create an object to be sent in JSON format for frontend
                     $response->message = "Successfully logged in";
@@ -81,6 +87,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     $response->token = $token ?? ''; // Include the token in the response
                     http_response_code(200);
                     echo json_encode($response);
+                    exit();
                  }
                  } else {
                 // Invalid password

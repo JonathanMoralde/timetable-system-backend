@@ -3,7 +3,6 @@
 
 include_once '../../includes/db.php';
 include '../../includes/header.php';
-header("Content-Type: application/json; charset=UTF-8");
 
 // Check if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {

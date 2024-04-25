@@ -5,24 +5,20 @@
 
 include_once '../../includes/db.php';
 include '../../includes/header.php';
-header("Content-Type: application/json; charset=UTF-8");
+// header("Content-Type: application/json; charset=UTF-8");
 
 // Check if the request method is POST
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-    http_response_code(405); // Method Not Allowed
-    echo json_encode(array("error" => "Method Not Allowed"));
-    exit;
-} else {
+if ($_SERVER["REQUEST_METHOD"] === "GET") {
 
     // Check if the user is logged in
-    if (isset($_SESSION['user_id'])) {
+    if (!empty($_SESSION['user_id'])) {
         // User is logged in
         // Return JSON response indicating the user is logged in
         http_response_code(200);
         echo json_encode(array("logged_in" => true, "user_id" => $_SESSION['user_id'], "type" => $_SESSION['type']));
     } else {
         // User is not logged in, check for remember me token
-        if (isset($_COOKIE['remember_token'])) {
+        if (!empty($_COOKIE['remember_token'])) {
             // Look up token in database
             $token = $_COOKIE['remember_token'];
             $query = "SELECT * FROM users WHERE remember_token = ? AND remember_token_expiration > ?";
@@ -45,12 +41,12 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
                 // No valid remember me token found or it's expired, user is not logged in
                 // Clear the expired remember me token from the cookie
                 setcookie('remember_token', '', time() - 3600, '/');
-                http_response_code(401); // Unauthorized
+                http_response_code(200); // Unauthorized
                 echo json_encode(array("logged_in" => false));
             }
         } else {
             // No remember me token found, user is not logged in
-            http_response_code(401); // Unauthorized
+            http_response_code(200); // Unauthorized
             echo json_encode(array("logged_in" => false));
         }
     }
