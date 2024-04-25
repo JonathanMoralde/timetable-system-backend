@@ -11,7 +11,7 @@ $response = new stdClass();
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     // SQL query to fetch data
-    $sql = "SELECT instructor.academic_rank, instructor.first_name, instructor.middle_name, instructor.surname, instructor.research_status, instructor.employment_status, department.department_id, department.department_name
+    $sql = "SELECT instructor.instructor_id, instructor.academic_rank, instructor.first_name, instructor.middle_name, instructor.surname, instructor.research_status, instructor.employment_status, department.department_id, department.department_name
             FROM instructor
             LEFT JOIN department ON instructor.department_id = department.department_id";
     // Execute the query
