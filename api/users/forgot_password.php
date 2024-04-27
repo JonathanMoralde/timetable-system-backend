@@ -31,16 +31,19 @@ if(isset($_POST['email'])){
 
         if($update_token_run){
                 send_password_reset($fetch_email, $token);
+                http_response_code(200); 
                 echo json_encode(array("success"=>true, "data"=>"Password reset link sent, please check you email!"));
                 // $_SESSION['success'] = "Success";
                 // header("location: forgot-password.php?success=1");
             }else{
                 // failed to update token
+                http_response_code(500); 
                 echo json_encode(array("success"=>false, "data"=>"Failed to send password reset link, please try again later!"));
         }
     }else{
         // email does not exist/not registered
-        echo "no email found";
+        http_response_code(500); 
+        echo json_encode(array("success"=>false, "data"=>"Email is not registered!"));
     }
 }
 
@@ -73,7 +76,7 @@ function send_password_reset($fetch_email, $token){
     $email_template = "
     <h2>To reset your password, please click on the link below. If you did not request a password reset, please disregard this email</h2>
     <h5>Reset your password by clicking on the link</h5>
-    <a href='http://localhost:9000/reset-password/$token/$fetch_email'> Click Here </a>
+    <a href='http://localhost:9000/#/reset-password/$token/$fetch_email'> Click Here </a>
     <br></br>
 
     ";
