@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         } else {
             // Send error response
             http_response_code(500); // Internal Server Error
-            echo json_encode(array("message" => "Failed to delete the room"));
+            echo json_encode(array("message" => "Failed to delete the program"));
         }
 
         // Close statement

@@ -9,22 +9,22 @@ header("Content-Type: multipart/form-data");
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     // Validate and sanitize input
-    $curriculum_id = $_POST['curriculumId'];
+    $course_type_id = $_POST['courseTypeId'];
 
-    if ($curriculum_id) {
+    if ($course_type_id) {
         // Prepare and execute SQL delete query
-        $query = "DELETE FROM curriculum WHERE curriculum_id = ?";
+        $query = "DELETE FROM course_type WHERE course_type_id = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $curriculum_id);
+        $stmt->bind_param("i", $course_type_id);
 
         if ($stmt->execute()) {
             // Send success response
             http_response_code(200);
-            echo json_encode(array("message" => "Successfully deleted the curriculum"));
+            echo json_encode(array("message" => "Successfully deleted the course type"));
         } else {
             // Send error response
             http_response_code(500); // Internal Server Error
-            echo json_encode(array("message" => "Failed to delete the curriculum"));
+            echo json_encode(array("message" => "Failed to delete the course type"));
         }
 
         // Close statement
