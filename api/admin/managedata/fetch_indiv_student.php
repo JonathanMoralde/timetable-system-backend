@@ -10,11 +10,12 @@ include '../../../includes/header.php';
 $response = new stdClass();
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    $student_id = $_GET['studentId'];
     // SQL query to fetch data
-    $sql = "SELECT student.student_id, student.school_id, student.first_name, student.middle_name, student.surname, student.year_level, student.block, program.program_id, program.program_name, users.user_id
+    $sql = "SELECT student.student_id, student.school_id, student.first_name, student.middle_name, student.surname, student.year_level, student.block, program.program_id, program.program_name
             FROM student
             LEFT JOIN program ON student.program_id = program.program_id
-            LEFT JOIN users ON student.user_id = users.user_id";
+            WHERE student_id = '$student_id'";
     // Execute the query
     $result = $conn->query($sql);
 
