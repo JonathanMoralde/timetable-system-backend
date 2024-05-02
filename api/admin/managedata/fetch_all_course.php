@@ -11,10 +11,11 @@ $response = new stdClass();
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     // SQL query to fetch data
-    $sql = "SELECT course.course_id, course.course_code, course.course_name, course.year_level, course.semester, course_type.course_type_id, course_type.course_type, curriculum.curriculum_id, curriculum.year_effectivity
+    $sql = "SELECT course.course_id, course.course_code, course.course_name, course.year_level, course.semester, course_type.course_type_id, course_type.course_type, curriculum.curriculum_id, curriculum.year_effectivity, program.program_id, program.abbreviation
             FROM course
             LEFT JOIN course_type ON course.course_type_id = course_type.course_type_id
-            LEFT JOIN curriculum ON course.curriculum_id = curriculum.curriculum_id";
+            LEFT JOIN curriculum ON course.curriculum_id = curriculum.curriculum_id
+            LEFT JOIN program ON curriculum.program_id = program.program_id";
 
     // Execute the query
     $result = $conn->query($sql);

@@ -12,7 +12,7 @@ $response = new stdClass();
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $curriculum_id = $_GET['curriculumId'];
     // SQL query to fetch data
-    $sql = "SELECT curriculum.curriculum_id, curriculum.year_effectivity, program.program_id, program.program_name
+    $sql = "SELECT curriculum.curriculum_id, curriculum.year_effectivity, program.program_id, program.program_name, program.abbreviation
             FROM curriculum
             LEFT JOIN program ON curriculum.program_id = program.program_id
             WHERE curriculum_id = '$curriculum_id'";
