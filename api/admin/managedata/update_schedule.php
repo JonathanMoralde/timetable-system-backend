@@ -8,6 +8,7 @@ include '../../../includes/header.php';
 header("Content-Type: multipart/form-data");
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
+    $schedule_id = $_POST['scheduleId'];
     $instructor_id = $_POST['instructorId'];
     $course_id = $_POST['courseId'];
     $room_id = $_POST['roomId'];
@@ -19,27 +20,17 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     $start_time = $_POST['startTime'];
     $end_time = $_POST['endTime'];
 
-    // Fetch the school_year_semester_id first
-    $fetch_sysem_sql = "SELECT school_year_semester_id FROM school_year_semester WHERE status = 'active'";
-    $result = $conn->query($fetch_sysem_sql);
 
-    if($result && $result->num_rows > 0) {
-         $row = $result->fetch_assoc();
-        $school_year_semester_id = $row['school_year_semester_id'];
-
-        $query = "INSERT INTO schedule (instructor_id, course_id, room_id,course_type_id,program_id,year_level,block,day, start_time, end_time, school_year_semester_id) VALUE(?,?,?,?,?,?,?,?,?,?,?)";
+        $query = "UPDATE schedule SET instructor_id= ?, course_id = ?, room_id = ?,course_type_id = ?,program_id = ?,year_level =?,block = ?,day = ?, start_time = ?, end_time = ?
+                WHERE schedule_id = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("iiiiiissssi",$instructor_id, $course_id, $room_id,$course_type_id,$program_id,$year_level,$block, $day, $start_time, $end_time, $school_year_semester_id);
+        $stmt->bind_param("iiiiiissssi",$instructor_id, $course_id, $room_id,$course_type_id,$program_id,$year_level,$block, $day, $start_time, $end_time, $schedule_id);
         $stmt->execute();
     
         http_response_code(200);
-        echo json_encode(array("message"=>"Successfully added the Schedule!"));
+        echo json_encode(array("message"=>"Successfully updated the Schedule!"));
         $stmt->close();
 
-    }else {
-        http_response_code(404);
-        echo json_encode(array("error" => "No active semester found"));
-    }
 
 
 }else {
