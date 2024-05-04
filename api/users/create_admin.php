@@ -12,7 +12,7 @@ header("Content-Type: multipart/form-data");
 $response = new stdClass();
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(!isset($_POST['firstName']) && !isset($_POST['middleName']) && !isset($_POST['surname']) && !isset($_POST['email']) &&  !isset($_POST['password'])){
+    if( !isset($_POST['firstName']) && !isset($_POST['middleName']) && !isset($_POST['surname']) && !isset($_POST['email']) &&  !isset($_POST['password'])){
         // Handle case where 'cor' key is not set or file upload failed
         $response->error = "Please fill out all the required fields!";
         http_response_code(400);
