@@ -9,7 +9,7 @@ include '../../../includes/header.php';
 $response = new stdClass();
 
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $program_id = isset($_GET['programId']) ? $_GET['programId'] : null;
+    $department_id = isset($_GET['departmentId']) ? $_GET['departmentId'] : null;
     // SQL query to fetch data
     $sql = "SELECT 
                 instructor.instructor_id,
@@ -48,8 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
             LEFT JOIN school_year_semester ON schedule.school_year_semester_id = school_year_semester.school_year_semester_id
             WHERE school_year_semester.status = 'active'";
 
-            if(!empty($program_id) && isset($_GET['programId'])){
-                $sql .= " AND schedule.program_id = '$program_id'";
+            if(!empty($department_id) && isset($_GET['departmentId'])){
+                $sql .= " AND department.department_id = '$department_id'";
             }
 
     // Execute the query
